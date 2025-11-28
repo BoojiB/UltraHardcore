@@ -215,6 +215,7 @@ hooksecurefunc("TargetFrame_Update", ApplyMask)
 hooksecurefunc("TargetFrame_UpdateAuras", ApplyMask)
 hooksecurefunc("TargetofTarget_Update", function()
   C_Timer.After(0, function()
+    -- We need to wait a frame for blizzard to finish with ToT to prevent leaving a background texture
     HideSubFrames("TargetFrameToT")
     HideTextureRegions(TargetFrameToTTextureFrame)
     HideToTAuras()
@@ -237,7 +238,6 @@ function SetTargetFrameDisplay(mask)
     targetFrameEventFrame:SetScript("OnEvent", function(_, event, unit)
       if event == "PLAYER_TARGET_CHANGED" then
         ApplyMask()
-        ShowToT()
       end
     end)
   end
