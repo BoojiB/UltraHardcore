@@ -86,18 +86,22 @@ local settingsCheckboxOptions = { {
   name = 'Completely Remove Target Frame',
   dbSettingsValueName = 'completelyRemoveTargetFrame',
   tooltip = 'Completely remove the target frame',
+  dependsOn = 'hideTargetFrame',
 }, {
   name = 'Show Target Buffs',
   dbSettingsValueName = 'showTargetBuffs',
   tooltip = 'Show buffs on the target frame',
+  dependsOn = 'hideTargetFrame',
 }, {
   name = 'Show Target Debuffs',
   dbSettingsValueName = 'showTargetDebuffs',
   tooltip = 'Show debuffs on the target frame',
+  dependsOn = 'hideTargetFrame',
 }, {
   name = 'Show Target Raid Icon',
   dbSettingsValueName = 'showTargetRaidIcon',
   tooltip = 'Show raid icon on the target frame',
+  dependsOn = 'hideTargetFrame',
 }, {
   -- Misc Settings (no preset button)
   name = 'On Screen Statistics',
@@ -193,6 +197,10 @@ local settingsCheckboxOptions = { {
   name = 'ULTRA Show Druid Manabar',
   dbSettingsValueName = 'showDruidFormResourceBar',
   tooltip = 'Show a separate resource bar when shapeshifted as a druid',
+}, {
+  name = 'Show Soulshard Indicator',
+  dbSettingsValueName = 'showSoulshardIndicator',
+  tooltip = 'Display an icon when the current target will drop a soulshard upon defeat (Warlocks only)',
 }, {
   name = 'Always Show Resource Map',
   dbSettingsValueName = 'alwaysShowResourceMap',

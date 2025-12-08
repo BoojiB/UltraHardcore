@@ -148,7 +148,7 @@ if not petResourceBar then
 end
 
 petResourceBar:SetSize(125, PlayerFrameManaBar:GetHeight() - 5)
-petResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -5)
+petResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -7)
 petResourceBar:SetStatusBarTexture('Interface\\TargetingFrame\\UI-StatusBar')
 petResourceBar:Hide() -- Initially hidden
 -- Add border around pet resource bar
@@ -182,7 +182,7 @@ if not druidFormResourceBar then
   return
 end
 druidFormResourceBar:SetSize(125, PlayerFrameManaBar:GetHeight() - 5)
-druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -5)
+druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -7)
 druidFormResourceBar:SetStatusBarTexture('Interface\\TargetingFrame\\UI-StatusBar')
 druidFormResourceBar:Hide() -- Initially hidden
 -- Add a border around the druid form resource bar
@@ -221,7 +221,7 @@ local function LoadDruidFormResourceBarPosition()
   local pos = UltraHardcoreDB.druidFormResourceBarPosition
   druidFormResourceBar:ClearAllPoints()
   -- Always anchor to the main resource bar, matching the pet bar
-  druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -5)
+  druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -7)
 end
 
 -- Make the druid form resource bar draggable with position saving
@@ -664,14 +664,19 @@ local function HandleBuffBarSettingChange()
 end
 
 resourceBar:SetScript('OnEvent', function(self, event, unit)
-  if not GLOBAL_SETTINGS or not GLOBAL_SETTINGS.hidePlayerFrame or GLOBAL_SETTINGS.hideCustomResourceBar then
-    resourceBar:Hide()
-    if ShouldHideComboFrame() then
-      comboFrame:Hide()
+  -- Skip visibility check for pet events - they should only affect pet bar, not player bar
+  local isPetEvent = event == 'UNIT_PET' or event == 'PET_ATTACK_START' or event == 'PET_ATTACK_STOP'
+  
+  if not isPetEvent then
+    if not GLOBAL_SETTINGS or not GLOBAL_SETTINGS.hidePlayerFrame or GLOBAL_SETTINGS.hideCustomResourceBar then
+      resourceBar:Hide()
+      if ShouldHideComboFrame() then
+        comboFrame:Hide()
+      end
+      petResourceBar:Hide()
+      druidFormResourceBar:Hide()
+      return
     end
-    petResourceBar:Hide()
-    druidFormResourceBar:Hide()
-    return
   end
 
   -- Ensure resource bar is visible when conditions are met
@@ -775,7 +780,7 @@ local function ResetDruidFormResourceBarPosition()
   -- Clear existing points first
   druidFormResourceBar:ClearAllPoints()
   -- Anchor to the main resource bar, matching the pet bar
-  druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -5)
+  druidFormResourceBar:SetPoint('TOP', resourceBar, 'BOTTOM', 0, -7)
 end
 
 -- Slash command to reset resource bar position
